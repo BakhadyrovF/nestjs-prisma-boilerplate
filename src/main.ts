@@ -8,7 +8,9 @@ import { ConfigService } from 'shared/services/config.service';
 
 async function bootstrap() {
     configDotenv();
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule, {
+        bufferLogs: true
+    });
     const configService = app.get(ConfigService);
 
     app.enableCors({

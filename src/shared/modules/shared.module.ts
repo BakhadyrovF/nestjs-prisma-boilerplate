@@ -1,4 +1,5 @@
 import { Global, Module } from "@nestjs/common";
+import { LoggerModule } from "shared/modules/logger.module";
 import { ConfigService } from "shared/services/config.service";
 import { DatabaseService } from "shared/services/database.service";
 
@@ -9,9 +10,13 @@ import { DatabaseService } from "shared/services/database.service";
         DatabaseService,
         ConfigService
     ],
+    imports: [
+        LoggerModule
+    ],
     exports: [
         DatabaseService,
-        ConfigService
+        ConfigService,
+        LoggerModule
     ]
 })
 export class SharedModule { }
