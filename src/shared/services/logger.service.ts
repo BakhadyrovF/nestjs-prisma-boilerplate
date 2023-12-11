@@ -10,7 +10,7 @@ export class LoggerService {
         this.logger.info(message);
     }
 
-    error(message: unknown) {
-        this.logger.error(message);
+    error(message: unknown, stack: string | null = null) {
+        this.logger.error({ message, stack });
     }
 }

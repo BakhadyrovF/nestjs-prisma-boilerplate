@@ -4,6 +4,8 @@ import { UnprocessableEntityException, ValidationPipe } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
 import { configDotenv } from 'dotenv';
 import { ConfigService } from 'shared/services/config.service';
+import { AllExceptionsFilter } from 'exceptions/filters/all-exceptions.filter';
+import { LoggerService } from 'shared';
 
 
 async function bootstrap() {
@@ -12,6 +14,7 @@ async function bootstrap() {
         bufferLogs: true
     });
     const configService = app.get(ConfigService);
+    const loggerService = app.get(LoggerService);
 
     app.enableCors({
         origin: ['http://localhost:3000'],
@@ -29,6 +32,7 @@ async function bootstrap() {
             });
         }
     }));
+    app.useGlobalFilters(new AllExceptionsFilter(loggerService));
     app.setGlobalPrefix('api/v1');
     await app.listen(configService.get<number>('APP_PORT', 9000));
 }
