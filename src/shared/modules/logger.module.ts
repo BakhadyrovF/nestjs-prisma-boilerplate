@@ -1,23 +1,22 @@
 import { Module } from "@nestjs/common";
-import { mkdirSync } from "fs";
+import { existsSync, mkdirSync } from "fs";
 import pino from "pino";
 import { LoggerService } from "shared/services/logger.service";
 
-
+const LOGS_DIRECTORY = 'logs';
+const LOGS_DESTINATION = `${LOGS_DIRECTORY}/app.log`;
 @Module({
     providers: [
         {
             provide: LoggerService,
             useFactory: () => {
-                try {
+                if (!existsSync(LOGS_DIRECTORY)) {
                     mkdirSync('logs');
-                } catch (error) { }
+                }
 
                 return new LoggerService(
-                    pino({
-                        level: 'info'
-                    }, pino.destination({
-                        dest: 'logs/app.log'
+                    pino({}, pino.destination({
+                        dest: LOGS_DESTINATION,
                     }))
                 );
             }
