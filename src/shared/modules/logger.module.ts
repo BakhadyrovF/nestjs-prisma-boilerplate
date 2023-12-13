@@ -11,7 +11,7 @@ const LOGS_DESTINATION = `${LOGS_DIRECTORY}/app.log`;
             provide: LoggerService,
             useFactory: () => {
                 if (!existsSync(LOGS_DIRECTORY)) {
-                    mkdirSync('logs');
+                    mkdirSync(LOGS_DIRECTORY);
                 }
 
                 return new LoggerService(
