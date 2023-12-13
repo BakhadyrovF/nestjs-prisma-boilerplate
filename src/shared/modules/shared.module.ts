@@ -10,6 +10,9 @@ import { DatabaseService } from "shared/services/database.service";
         DatabaseService,
         ConfigService
     ],
+    imports: [
+        LoggerModule
+    ],
     exports: [
         DatabaseService,
         ConfigService,
